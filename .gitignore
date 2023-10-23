@@ -1,0 +1,12 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+.idea
+target
+out
+build
+
+Thumbs.db*
+.DS_Store*
+node_modules
+*.iml
