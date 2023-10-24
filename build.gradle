@@ -16,7 +16,7 @@ repositories {
 }
 
 allure {
-    version = '2.17.2'
+    version = '2.23.0'
 }
 
 dependencies {
@@ -28,9 +28,10 @@ dependencies {
             "org.projectlombok:lombok:1.18.20",
             "com.codeborne:selenide:6.17.1",
             'com.github.javafaker:javafaker:1.0.2',
+            'io.rest-assured:rest-assured:5.3.0',
             'mysql:mysql-connector-java:8.0.19',
             'org.postgresql:postgresql:42.6.0',
-            'io.qameta.allure:allure-junit5:2.17.2',
+            'io.qameta.allure:allure-junit5:2.23.0',
             'commons-dbutils:commons-dbutils:1.7',
             'io.qameta.allure:allure-selenide:2.23.0'
     )
