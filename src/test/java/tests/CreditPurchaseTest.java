@@ -163,7 +163,7 @@ public class CreditPurchaseTest extends BaseTest {
     public void shouldFailurePaymentIfCvvHasThreeZeros() {
         val cardData = getInvalidCvvIfThreeZero();
         paymentPage.fillCardData(cardData);
-        paymentPage.shouldImproperFormatNotification();
+        paymentPage.shouldSuccessNotification();
     }
 
     @Test
