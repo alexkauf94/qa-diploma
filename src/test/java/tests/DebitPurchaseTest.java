@@ -32,20 +32,20 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Проверка успешной оплаты тура при заполнении корректными данными карты")
     public void shouldSuccessPayWithValidCard() {
-        val cardData = getApprovedCard();
+        var cardData = getApprovedCard();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldSuccessNotification();
 
-        val expectedStatus = "APPROVED";
-        val actualStatus = getCardStatusForPayment();
+        var expectedStatus = "APPROVED";
+        var actualStatus = getCardStatusForPayment();
         assertEquals(expectedStatus, actualStatus);
 
-        val expectedAmount = "4500000";
-        val actualAmount = getAmountPayment();
+        var expectedAmount = "4500000";
+        var actualAmount = getAmountPayment();
         assertEquals(expectedAmount, actualAmount);
 
-        val transactionIdExpected = getTransactionId();
-        val paymentIdActual = getPaymentIdForCardPay();
+        var transactionIdExpected = getTransactionId();
+        var paymentIdActual = getPaymentId();
         assertNotNull(transactionIdExpected);
         assertNotNull(paymentIdActual);
         assertEquals(transactionIdExpected, paymentIdActual);
@@ -54,16 +54,16 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Покупка тура в кредит с помощью отклоняемой карты")
     public void shouldFailurePayWithDeclinedCard() {
-        val cardData = getDeclinedCard();
+        var cardData = getDeclinedCard();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldFailureNotification();
 
-        val expectedStatus = "DECLINED";
-        val actualStatus = getCardStatusForPayment();
+        var expectedStatus = "DECLINED";
+        var actualStatus = getCardStatusForPayment();
         assertEquals(expectedStatus, actualStatus);
 
-        val transactionIdExpected = getTransactionId();
-        val paymentIdActual = getPaymentIdForCardPay();
+        var transactionIdExpected = getTransactionId();
+        var paymentIdActual = getPaymentId();
         assertNotNull(transactionIdExpected);
         assertNotNull(paymentIdActual);
         assertEquals(transactionIdExpected, paymentIdActual);
@@ -72,7 +72,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Номер карты': пустое поле")
     public void shouldFailurePaymentIfEmptyCardNumber() {
-        val cardData = getInvalidCardNumberIfEmpty();
+        var cardData = getInvalidCardNumberIfEmpty();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldEmptyFieldNotification();
     }
@@ -80,7 +80,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Номер карты': Поле содержит количество цифр менее 16")
     public void shouldFailurePaymentIfCardNumberIfLess16Sym() {
-        val cardData = getInvalidCardNumberIfLess16Sym();
+        var cardData = getInvalidCardNumberIfLess16Sym();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldImproperFormatNotification();
     }
@@ -88,7 +88,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Номер карты не содержится в базе данных банка")
     public void shouldFailurePaymentIfCardNumberIfOutOfBase() {
-        val cardData = getInvalidCardNumberIfOutOfDatabase();
+        var cardData = getInvalidCardNumberIfOutOfDatabase();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldFailureNotification();
     }
@@ -96,7 +96,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Владелец': пустое поле.")
     public void shouldFailurePaymentIfEmptyCardholderName() {
-        val cardData = getInvalidCardOwnerNameIfEmpty();
+        var cardData = getInvalidCardOwnerNameIfEmpty();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldEmptyFieldNotification();
     }
@@ -104,7 +104,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Владелец': Поле содержит цифры и спец символы")
     public void shouldFailurePaymentIfNameNumeric() {
-        val cardData = getInvalidCardOwnerNameIfNumericAndSpecialCharacters();
+        var cardData = getInvalidCardOwnerNameIfNumericAndSpecialCharacters();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldImproperFormatNotification();
     }
@@ -112,7 +112,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Владелец': русские буквы")
     public void shouldFailurePaymentIfNameRussianLetters() {
-        val cardData = getInvalidCardOwnerNameIfRussianLetters();
+        var cardData = getInvalidCardOwnerNameIfRussianLetters();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldImproperFormatNotification();
     }
@@ -120,7 +120,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'CVC/CVV': пустое поле")
     public void shouldFailurePaymentIfCVCIsEmpty() {
-        val cardData = getInvalidCvcIfEmpty();
+        var cardData = getInvalidCvcIfEmpty();
         paymentPage.fillCardData(cardData);
         ElementsCollection fieldSub = $$(".input__sub");
         final SelenideElement cvvFieldSub = fieldSub.get(2);
@@ -130,7 +130,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'CVC/CVV': Поле содержит одну цифру")
     public void shouldFailurePaymentIfCVCHasOneDigit() {
-        val cardData = getInvalidCvcIfOneDigit();
+        var cardData = getInvalidCvcIfOneDigit();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldImproperFormatNotification();
     }
@@ -138,7 +138,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'CVC/CVV': Поле содержит две цифры")
     public void shouldFailurePaymentIfCVCHasTwoDigits() {
-        val cardData = getInvalidCvcIfTwoDigits();
+        var cardData = getInvalidCvcIfTwoDigits();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldImproperFormatNotification();
     }
@@ -146,7 +146,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'CVC/CVV': Поле содержит три нуля")
     public void shouldFailurePaymentIfCVCHasThreeZeros() {
-        val cardData = getInvalidCvvIfThreeZero();
+        var cardData = getInvalidCvvIfThreeZero();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldImproperFormatNotification();
     }
@@ -154,25 +154,19 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Отправка пустой формы покупки тура")
     public void shouldFailurePaymentIfTourFieldsAreEmpty() {
-        val cardData = getInvalidCardDataIfEmptyAllFields();
+        var cardData = getInvalidCardDataIfEmptyAllFields();
         paymentPage.fillCardData(cardData);
-        final ElementsCollection fieldSub = $$(".input__sub");
-        final SelenideElement cardNumberFieldSub = fieldSub.get(1);
-        final SelenideElement monthFieldSub = fieldSub.get(2);
-        final SelenideElement yearFieldSub = fieldSub.get(3);
-        final SelenideElement cardholderFieldSub = fieldSub.get(4);
-        final SelenideElement cvvFieldSub = fieldSub.get(5);
-        cardNumberFieldSub.shouldHave(text("Поле обязательно для заполнения"));
-        monthFieldSub.shouldHave(text("Поле обязательно для заполнения"));
-        yearFieldSub.shouldHave(text("Поле обязательно для заполнения"));
-        cardholderFieldSub.shouldHave(text("Поле обязательно для заполнения"));
-        cvvFieldSub.shouldHave(text("Поле обязательно для заполнения"));
+        paymentPage.shouldImproperFormatNotification();
+        paymentPage.shouldImproperFormatNotification();
+        paymentPage.shouldImproperFormatNotification();
+        paymentPage.shouldEmptyFieldNotification();
+        paymentPage.shouldImproperFormatNotification();
     }
 
     @Test
     @Description("Валидация поля 'Месяц': пустое поле")
     public void shouldFailurePaymentIfEmptyNumberOfMonth() {
-        val cardData = getInvalidMonthIfEmpty();
+        var cardData = getInvalidMonthIfEmpty();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldEmptyFieldNotification();
     }
@@ -180,7 +174,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Месяц': Поле содержит двузначное число более 12")
     public void shouldFailurePaymentIfNumberOfMonthIsMoreThan12() {
-        val cardData = getInvalidNumberOfMonthIfMore12();
+        var cardData = getInvalidNumberOfMonthIfMore12();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldInvalidExpiredDateNotification();
     }
@@ -188,7 +182,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Месяц': Поле содержит одно число")
     public void shouldFailurePaymentIfNumberOfMonthHasOneDigit() {
-        val cardData = getInvalidNumberOfMonthIfOneDigit();
+        var cardData = getInvalidNumberOfMonthIfOneDigit();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldImproperFormatNotification();
     }
@@ -196,7 +190,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Месяц': Поле содержит два нуля")
     public void shouldFailurePaymentIfNumberOfMonthIsTwoZeros() {
-        val cardData = getInvalidNumberOfMonthIfZero();
+        var cardData = getInvalidNumberOfMonthIfZero();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldInvalidExpiredDateNotification();
     }
@@ -204,7 +198,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Год': Поле содержит два нуля")
     public void shouldFailurePaymentIfYearHasTwoZeros () {
-        val cardData = getInvalidYearIfZero();
+        var cardData = getInvalidYearIfZero();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldExpiredDatePassNotification();
     }
@@ -212,7 +206,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Год': Поле содержит одно число")
     public void shouldFailurePaymentIfYearHasOneDigit () {
-        val cardData = getInvalidNumberOfYearIfOneDigit();
+        var cardData = getInvalidNumberOfYearIfOneDigit();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldImproperFormatNotification();
     }
@@ -220,7 +214,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Оплата по карте с истекшим сроком действия (введен год ранее текущего)")
     public void shouldFailurePaymentIfYearBeforeCurrentYear () {
-        val cardData = getInvalidYearIfBeforeCurrentYear();
+        var cardData = getInvalidYearIfBeforeCurrentYear();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldExpiredDatePassNotification();
     }
@@ -228,7 +222,7 @@ public class DebitPurchaseTest extends BaseTest {
     @Test
     @Description("Валидация поля 'Год': Пустое поле")
     public void shouldFailurePaymentIfEmptyYear () {
-        val cardData = getInvalidYearIfEmpty();
+        var cardData = getInvalidYearIfEmpty();
         paymentPage.fillCardData(cardData);
         paymentPage.shouldEmptyFieldNotification();
     }
