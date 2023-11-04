@@ -1,11 +1,11 @@
 package utils;
 
-import data.OrderEntity;
-import data.PaymentEntity;
+import models.OrderEntity;
+import models.PaymentEntity;
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
-import data.CreditRequestEntity;
+import models.CreditRequestEntity;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
