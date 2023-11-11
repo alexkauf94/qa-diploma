@@ -29,7 +29,7 @@ public class MainPage {
     }
 
     @Step("Выбрать оплату в кредит")
-    public void payWithCredit() {
+        public void payWithCredit() {
         payWithCreditButton.click();
         formOfPayment.shouldHave(text("Кредит по данным карты"));
     }

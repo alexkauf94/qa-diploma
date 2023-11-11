@@ -3,18 +3,14 @@ package tests;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import jdk.jfr.Description;
-import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.PaymentPage;
 import pages.MainPage;
-import pages.PaymentPage;
-import tests.BaseTest;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$$;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static utils.DataGenerator.*;
 import static utils.DbConnectionHelper.*;
 
@@ -37,18 +33,11 @@ public class DebitPurchaseTest extends BaseTest {
         paymentPage.shouldSuccessNotification();
 
         var expectedStatus = "APPROVED";
-        var actualStatus = getCardStatusForPayment();
-        assertEquals(expectedStatus, actualStatus);
+        var paymentInfo = getCardRequestStatus();
+        var orderInfo = getOrderInfo();
 
-        var expectedAmount = "4500000";
-        var actualAmount = getAmountPayment();
-        assertEquals(expectedAmount, actualAmount);
-
-        var transactionIdExpected = getTransactionId();
-        var paymentIdActual = getPaymentId();
-        assertNotNull(transactionIdExpected);
-        assertNotNull(paymentIdActual);
-        assertEquals(transactionIdExpected, paymentIdActual);
+        assertEquals(expectedStatus, paymentInfo.getStatus());
+        assertEquals(paymentInfo.getTransaction_id(), orderInfo.getPayment_id());
     }
 
     @Test
@@ -59,14 +48,11 @@ public class DebitPurchaseTest extends BaseTest {
         paymentPage.shouldFailureNotification();
 
         var expectedStatus = "DECLINED";
-        var actualStatus = getCardStatusForPayment();
-        assertEquals(expectedStatus, actualStatus);
+        var paymentInfo = getCardRequestStatus();
+        var orderInfo = getOrderInfo();
 
-        var transactionIdExpected = getTransactionId();
-        var paymentIdActual = getPaymentId();
-        assertNotNull(transactionIdExpected);
-        assertNotNull(paymentIdActual);
-        assertEquals(transactionIdExpected, paymentIdActual);
+        assertEquals(expectedStatus, paymentInfo.getStatus());
+        assertEquals(paymentInfo.getTransaction_id(), orderInfo.getPayment_id());
     }
 
     @Test

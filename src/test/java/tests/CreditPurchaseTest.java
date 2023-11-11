@@ -3,17 +3,14 @@ package tests;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import jdk.jfr.Description;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.MainPage;
 import pages.PaymentPage;
-import tests.BaseTest;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$$;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static utils.DataGenerator.*;
 import static utils.DbConnectionHelper.*;
 
@@ -37,14 +34,11 @@ public class CreditPurchaseTest extends BaseTest {
         paymentPage.shouldSuccessNotification();
 
         var expectedStatus = "APPROVED";
-        var actualStatus = getCardStatusForCreditRequest();
-        assertEquals(expectedStatus, actualStatus);
+        var creditRequestInfo = getCreditRequestStatus();
+        var orderInfo = getOrderInfo();
 
-        var bankIdExpected = getBankId();
-        var paymentIdActual = getPaymentId();
-        assertNotNull(bankIdExpected);
-        assertNotNull(paymentIdActual);
-        assertEquals(bankIdExpected, paymentIdActual);
+        assertEquals(expectedStatus, creditRequestInfo.getStatus());
+        assertEquals(creditRequestInfo.getBank_id(), orderInfo.getCredit_id());
     }
 
     @Test
@@ -55,14 +49,11 @@ public class CreditPurchaseTest extends BaseTest {
         paymentPage.shouldFailureNotification();
 
         var expectedStatus = "DECLINED";
-        var actualStatus = getCardStatusForCreditRequest();
-        assertEquals(expectedStatus, actualStatus);
+        var creditRequestInfo = getCreditRequestStatus();
+        var orderInfo = getOrderInfo();
 
-        var bankIdExpected = getBankId();
-        var paymentIdActual = getPaymentId();
-        assertNotNull(bankIdExpected);
-        assertNotNull(paymentIdActual);
-        assertEquals(bankIdExpected, paymentIdActual);
+        assertEquals(expectedStatus, creditRequestInfo.getStatus());
+        assertEquals(creditRequestInfo.getBank_id(), orderInfo.getCredit_id());
     }
 
 

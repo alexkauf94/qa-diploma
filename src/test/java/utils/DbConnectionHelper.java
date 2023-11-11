@@ -40,56 +40,29 @@ public class DbConnectionHelper {
     }
 
     @SneakyThrows
-    public static PaymentEntity getCardStatusForPayment() {
+    public static PaymentEntity getCardRequestStatus() {
         getConnection();
         var runner = new QueryRunner();
-        var statusQuery = "SELECT * FROM payment_entity";
-        return runner.query(connection, statusQuery, new BeanHandler<>(PaymentEntity.class));
+        var idQuery = "SELECT * FROM payment_entity";
+        return runner.query(connection, idQuery, new BeanHandler<>(PaymentEntity.class));
+    }
+
+
+    @SneakyThrows
+    public static CreditRequestEntity getCreditRequestStatus() {
+        getConnection();
+        var runner = new QueryRunner();
+        var IdQuery = "SELECT * FROM credit_request_entity";
+        return runner.query(connection, IdQuery, new BeanHandler<>(CreditRequestEntity.class));
 
     }
 
     @SneakyThrows
-    public static CreditRequestEntity getCardStatusForCreditRequest() {
+    public static OrderEntity getOrderInfo() {
         getConnection();
         var runner = new QueryRunner();
-        var statusQuery = "SELECT * FROM credit_request_entity";
-        return runner.query(connection, statusQuery, new BeanHandler<>(CreditRequestEntity.class));
-
-    }
-
-    @SneakyThrows
-    public static OrderEntity getPaymentId() {
-        getConnection();
-        var runner = new QueryRunner();
-        var idQueryForCardPay = "SELECT * FROM order_entity";
-        return runner.query(connection, idQueryForCardPay, new BeanHandler<>(OrderEntity.class));
-
-    }
-
-    @SneakyThrows
-    public static PaymentEntity getTransactionId() {
-        getConnection();
-        var runner = new QueryRunner();
-        var idTransactionQuery = "SELECT * FROM payment_entity";
-        return runner.query(connection, idTransactionQuery, new BeanHandler<>(PaymentEntity.class));
-
-    }
-
-    @SneakyThrows
-    public static PaymentEntity getAmountPayment() {
-        getConnection();
-        var runner = new QueryRunner();
-        var amountQuery = "SELECT * FROM payment_entity";
-        return runner.query(connection, amountQuery, new BeanHandler<>(PaymentEntity.class));
-
-    }
-
-    @SneakyThrows
-    public static CreditRequestEntity getBankId() {
-        getConnection();
-        var runner = new QueryRunner();
-        var bankIdQuery = "SELECT * FROM credit_request_entity";
-        return runner.query(connection, bankIdQuery, new BeanHandler<>(CreditRequestEntity.class));
+        var idQuery = "SELECT * FROM order_entity";
+        return runner.query(connection, idQuery, new BeanHandler<>(OrderEntity.class));
 
     }
 
